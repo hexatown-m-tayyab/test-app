@@ -5,9 +5,7 @@ jobs:
     working_directory: ~/demo-react-native
     docker:
       - image: cimg/node:12.16
-      auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+
     steps:
       - checkout
 
