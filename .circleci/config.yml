@@ -124,24 +124,19 @@ jobs:
       # - restore_cache:
       #     key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
 
-      - run: bundle install
+      # - run: bundle install
+         - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: app/build/outputs/apk/
+          destination: apks/
 
       # - save_cache:
       #     key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
       #     paths:
       #       - vendor/bundle
 
-      - run:
-          name: fastlane tests
-          command: |
-            mkdir -p test-results/fastlane
-            bundle exec fastlane test
-            mv fastlane/report.xml test-results/fastlane
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: app/build/outputs/apk/
-          destination: apks/
+   
   
 
 workflows:
