@@ -28,10 +28,10 @@ jobs:
 
        - run:
           name: Build debug APK and release APK
-          command: |
+          - command: |
             ./gradlew :app:assembleDebug
             ./gradlew :app:assembleDebugAndroidTest
-            
+
   # macos-build-and-test:
   #   working_directory: ~/demo-react-native
   #   macos:
