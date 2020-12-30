@@ -26,9 +26,15 @@ jobs:
           paths:
             - node_modules
 
-       - run:
+      - run:
+          name: jest tests
+          command: |
+            mkdir -p test-results/jest
+            yarn run test
+          environment:
+            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
           name: Build debug APK and release APK
-          - command: |
+          command: |
             ./gradlew :app:assembleDebug
             ./gradlew :app:assembleDebugAndroidTest
 
