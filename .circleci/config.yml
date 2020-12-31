@@ -5,13 +5,26 @@ jobs:
     working_directory: ~/demo-react-native
     docker:
       - image: cimg/node:12.16 
-     steps:
+    steps:
       - checkout
       - run: make
-      - run: |
-          # tell the operating system to remove the file size limit on core dump files 
-          ulimit -c unlimited
-          ./dump
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: yarn install
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
       - run:
           command: |
             mkdir -p /tmp/core_dumps
@@ -19,6 +32,8 @@ jobs:
           when: on_fail
       - store_artifacts:
           path: /tmp/core_dumps
+
+      
 
   # macos-build-and-test:
   #   working_directory: ~/demo-react-native
