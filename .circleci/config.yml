@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   node:
-    working_directory: ~/demo-react-native
+    working_directory: ~/test-app
     docker:
       - image: cimg/node:12.16
 
