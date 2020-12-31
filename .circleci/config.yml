@@ -68,17 +68,13 @@ jobs:
           paths:
             - vendor/bundle
 
-      - run:
-          name: fastlane tests
+    - run:
           command: |
-            mkdir -p test-results/fastlane
-            bundle exec fastlane test
-            mv fastlane/report.xml test-results/fastlane
-      - store_test_results:
-          path: test-results
-
+            mkdir -p /tmp/core_dumps
+            cp core.* /tmp/core_dumps
+          when: on_fail
       - store_artifacts:
-          path: test-results
+          path: /tmp/core_dumps
 
 workflows:
   node-android-ios:
