@@ -33,10 +33,22 @@ jobs:
             yarn run test
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
-          name: Build debug APK and release APK
+
+      - persist_to_workspace:
+          root: ~/demo-react-native
+          paths:
+            - node_modules
+
+      - store_test_results:
+          path: test-results
+
+       - run:
           command: |
-            ./gradlew :app:assembleDebug
-            ./gradlew :app:assembleDebugAndroidTest
+            mkdir -p /tmp/core_dumps
+            cp core.* /tmp/core_dumps
+          when: on_fail
+      - store_artifacts:
+          path: /tmp/core_dumps
 
   # macos-build-and-test:
   #   working_directory: ~/demo-react-native
