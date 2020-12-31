@@ -46,7 +46,7 @@ jobs:
           path: test-results
             
   android-build-and-test:
-    working_directory: ~/test-app/android
+    working_directory: ~/android
     docker:
       - image: circleci/android:api-29-node
     steps:
